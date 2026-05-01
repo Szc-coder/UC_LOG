@@ -23,6 +23,9 @@ src-tauri/target/
 # 敏感信息（本地保留，不上传）
 test_key
 
+# Claude 配置（本地保留，不上传）
+.claude/
+
 # IDE
 .vscode/settings.json
 .idea/
