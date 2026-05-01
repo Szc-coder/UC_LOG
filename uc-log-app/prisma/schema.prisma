@@ -1,0 +1,89 @@
+// UC Log 数据库 Schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 排便记录
+model StoolRecord {
+  id              String   @id @default(uuid())
+  timestamp       DateTime
+  sequenceNumber  Int      @default(1) // 当日第几次
+
+  // Bristol量表
+  bristolType     Int      // 1-7
+  color           String   // yellow/brown/dark_brown/black/red/bloody
+  consistency     String   // formed/soft/mushy/watery
+  volume          String?  // small/medium/large
+
+  // 便血
+  bloodPresent    Boolean  @default(false)
+  bloodAmount     String?  // none/trace/coin_size/moderate/heavy
+  bloodLocation   String?  // on_surface/mixed/pure_blood
+  bloodColor      String?  // bright_red/dark_red/maroon
+
+  // 黏液
+  mucusPresent    Boolean  @default(false)
+  mucusAmount     String?  // none/small/moderate/large
+  mucusColor      String?  // clear/white/yellow/pink/bloody
+
+  // 急迫感
+  urgencyLevel    Int?     // 0-10
+  urgencySudden   Boolean?
+
+  // 腹痛
+  painBeforePresent    Boolean?
+  painBeforeLocation   String?
+  painBeforeIntensity  Int?     // 0-10
+  painAfterPresent     Boolean?
+  painAfterLocation    String?
+  painAfterIntensity   Int?     // 0-10
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// 每日排便汇总
+model DailyStoolSummary {
+  id                String   @id @default(uuid())
+  date              String   @unique // YYYY-MM-DD
+  totalCount        Int      @default(0)
+  nighttimeCount    Int      @default(0)
+
+  // Bristol分布
+  b1Count           Int      @default(0)
+  b2Count           Int      @default(0)
+  b3Count           Int      @default(0)
+  b4Count           Int      @default(0)
+  b5Count           Int      @default(0)
+  b6Count           Int      @default(0)
+  b7Count           Int      @default(0)
+
+  bloodOccurrences  Int      @default(0)
+  maxBloodAmount    String?
+  mucusOccurrences  Int      @default(0)
+  urgencyAvg        Float?
+  painEpisodes      Int      @default(0)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// AI配置（单例）
+model AIConfig {
+  id              String   @id @default("default")
+  apiBaseUrl      String   // API 请求地址
+  apiKey          String   // API Key（加密存储）
+  modelName       String   // 模型名称
+  maxTokens       Int      @default(4096)
+  temperature     Float    @default(0.7)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

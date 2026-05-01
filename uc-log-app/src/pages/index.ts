@@ -1,0 +1,10 @@
+export { DashboardPage } from './DashboardPage';
+export { StoolRecordPage } from './StoolRecordPage';
+export { DietRecordPage } from './DietRecordPage';
+export { SymptomRecordPage } from './SymptomRecordPage';
+export { MedicationRecordPage } from './MedicationRecordPage';
+export { AnalysisPage } from './AnalysisPage';
+export { FCTrackerPage } from './FCTrackerPage';
+export { ReportPage } from './ReportPage';
+export { PersonalDataPage } from './PersonalDataPage';
+export { SettingsPage } from './SettingsPage';
