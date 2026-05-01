@@ -28,5 +28,8 @@ src-tauri/target/
 .DS_Store
 Thumbs.db
 
-# 日志
-*.log
+# 设计文档（本地保留，不上传）
+设计文档/
+
+# 背景资料（本地保留，不上传）
+背景/ 
